@@ -26,9 +26,8 @@ public class BarrierObj extends GameObj {
     }
 
     public boolean isHit() {
-        return ballObj.getX() == x & ballObj.getYTop() <= y & isOnUpDeck
-                |
-                ballObj.getX() == x & ballObj.getYTop() <= y & !isOnUpDeck  ;
+        return ballObj.getX() == x && ballObj.getYTop() <= y && isOnUpDeck
+                ||  ballObj.getX() == x && ballObj.getYTop() <= y && !isOnUpDeck  ;
 
 
     }
