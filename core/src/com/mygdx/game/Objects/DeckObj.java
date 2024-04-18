@@ -8,7 +8,7 @@ public class DeckObj extends GameObj {
     BallObj ballObj;
 
     public DeckObj(int x, int y, String pathToTexture) {
-        super(x, y, 93, 497, "Rectangle 94.png");
+        super(x, y, 93, 497, "pictures/Rectangle 94.png");
         ballObj = new BallObj(0, 0);
     }
 

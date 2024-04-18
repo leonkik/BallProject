@@ -14,7 +14,7 @@ public class TimeManeger {
     public void beginSession() {
         score = 0;
         state = ScreenGameState.PLAYING;
-
+        lastTime = TimeUtils.millis();
     }
 
     public void pauseSession() {
@@ -25,6 +25,9 @@ public class TimeManeger {
         state = ScreenGameState.PLAYING;
     }
 
+    public boolean Timer( long apperTime){
+        return lastTime - TimeUtils.millis() == apperTime;
+    }
 
 
 

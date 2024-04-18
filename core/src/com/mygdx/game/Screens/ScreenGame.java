@@ -55,17 +55,17 @@ public class ScreenGame extends ScreenAdapter {
                 GameSettings.SCREEN_HEIGHT - 100 ,
                 100,
                 GameSettings.SCREEN_WIDTH ,
-                "Rectangle 90.png");
+                "pictures/Rectangle 90.png");
         vector3 = new Vector3();
-        barrierObj = new BarrierObj(GameSettings.SCREEN_WIDTH, deck_upper.getY() - 329 , 335, 78, true);
+        barrierObj = new BarrierObj(GameSettings.SCREEN_WIDTH, GameSettings.BARRIER_WIDTH ,  GameSettings.BARRIER_HEIGHT,true);
         timeManeger = new TimeManeger();
-        blackoutView  = new ImageView(0,0,GameSettings.BALL_WIDTH,GameSettings.BALL_HEIGHT, "Group 2.png");
+        blackoutView  = new ImageView(0,0,GameSettings.BALL_WIDTH,GameSettings.BALL_HEIGHT, "pictures/Group 2.png");
         //pauseTitleView = new TextView();
         pauseButton = new ButtonView(GameSettings.SCREEN_WIDTH - 10 ,
                 GameSettings.SCREEN_HEIGHT - 48,
                 48,
                 48,
-                "Group 3.png");
+                "pictures/Group 2.png");
     }
 
     @Override

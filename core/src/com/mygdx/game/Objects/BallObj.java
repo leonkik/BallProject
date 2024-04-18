@@ -10,7 +10,7 @@ public class BallObj extends GameObj {
     private boolean isMoveUp = true;
 
     public BallObj(int x, int y) {
-        super(x, y, GameSettings.BALL_HEIGHT, GameSettings.BALL_WIDTH, "Ellipse 7.png");
+        super(x, y, GameSettings.BALL_HEIGHT, GameSettings.BALL_WIDTH, "pictures/Ellipse 7.png");
         timeManeger = new TimeManeger();
     }
 
