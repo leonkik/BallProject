@@ -12,4 +12,5 @@ public class GameSettings {
     public static final int BARRIER_WIDTH = 78;
     public static final int BARRIER_HEIGHT= 335;
     public static final int BARRIER_SPEED = 15;
+    public static final int COMMONFONTSCALE = 10;
 }

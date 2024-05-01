@@ -8,8 +8,8 @@ import com.mygdx.game.MyGdxGame;
 
 public class ScreenLevelMenu extends ScreenAdapter {
     MyGdxGame myGdxGame;
-    public ScreenLevelMenu() {
-        super();
+    public ScreenLevelMenu(MyGdxGame myGdxGame) {
+        myGdxGame = new MyGdxGame();
     }
 
 

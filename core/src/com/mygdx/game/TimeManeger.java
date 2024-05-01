@@ -25,9 +25,10 @@ public class TimeManeger {
         state = ScreenGameState.PLAYING;
     }
 
-    public boolean Timer( long apperTime){
-        return lastTime - TimeUtils.millis() == apperTime;
+    public long timer(){
+        return TimeUtils.millis() - lastTime ;
     }
+
 
 
 

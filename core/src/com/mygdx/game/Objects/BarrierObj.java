@@ -12,40 +12,44 @@ public class BarrierObj  {
     int height;
     int width;
     Texture texture;
-    String pathToTexture = "pictures/Group 1.png";
+    String pathToTexture ;
     DeckObj deck_upper;
     DeckObj deck_botom;
-    public BarrierObj(int x, int wight, int hight, boolean isOnUpDeck) {
+    public BarrierObj( int wight, int height, boolean isOnUpDeck) {
         deck_upper = new DeckObj(125, GameSettings.SCREEN_HEIGHT / 2 + 335,
-                "Rectangle 94.png");
+                "pictures/Deck.png");
         deck_botom = new DeckObj(125, GameSettings.SCREEN_HEIGHT / 2 - 544,
-                "Rectangle 94.png");
-        this.x = x;
-        this.y = y;
+                "pictures/Deck.png");
+        this.x = GameSettings.SCREEN_WIDTH;
         this.height = height;
-        this.width = width;
-        this.pathToTexture = pathToTexture;
-        texture = new Texture(pathToTexture);
+        this.width = wight;
+
+
         ballObj = new BallObj(0, 0);
         if(isOnUpDeck){
-            y += deck_upper.getY() ;
+            y = deck_upper.getY() ;
+            this.pathToTexture = "pictures/TopBarrier.png";
         }
         if(!isOnUpDeck){
-            y += deck_botom.getY() + deck_botom.gethight() ;
+            y = deck_botom.getY() + deck_botom.gethight() ;
+            this.pathToTexture = "pictures/BottomBarrier.png";
         }
+        texture = new Texture(pathToTexture);
     }
 
     public void SetPosX(int nextX) {
         this.x = nextX;
     }
 
-    public void move(int speed) {
+    public boolean move() {
         if (x != 0 - width) {
-            x -= speed;
+            x -= GameSettings.BARRIER_SPEED;
         }
         if (x <= 0 - width) {
             SetPosX(GameSettings.SCREEN_WIDTH);
+            return true;
         }
+        return false;
     }
 
     public boolean isHit() {
@@ -55,13 +59,17 @@ public class BarrierObj  {
 
     }
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, x, y, width, height);
+        batch.draw(texture, GameSettings.SCREEN_WIDTH, y, width, height);
     }
 
     public void dispose() {
         texture.dispose();
     }
 
-
-
+    public int getX(){
+        return x ;
+    }
+    public int getY(){
+        return y ;
+    }
 }

@@ -12,8 +12,10 @@ public class ButtonView {
     com.mygdx.game.coponenets.ImageView imageView;
 
     String text;
+    BitmapFont bitmapFont;
 
     public ButtonView(int x, int y, int width, int height, String texturePath, BitmapFont bitmapFont, String text) {
+        bitmapFont = new BitmapFont();
 
         imageView = new ImageView(x, y, width, height, texturePath);
         textView = new TextView(0, 0, bitmapFont);
