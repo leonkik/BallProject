@@ -1,17 +1,24 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.coponenets.ImageView;
 
 public class ScreenSettings extends ScreenAdapter {
     MyGdxGame myGdxGame;
+    ImageView blackOutOfSettings;
+    ImageView QuitButton;
     public ScreenSettings(MyGdxGame myGdxGame) {
-            myGdxGame = new MyGdxGame();
+            this.myGdxGame = myGdxGame;
+            blackOutOfSettings = new ImageView(10 , 200 , "pictures/BackGraundOfSettings .png");
+            QuitButton = new ImageView(10, GameSettings.SCREEN_HEIGHT-100,"pictures/Quit.png");
     }
 
     @Override
     public void render(float delta) {
-        super.render(delta);
+        blackOutOfSettings.draw(myGdxGame.batch);
+        QuitButton.draw(myGdxGame.batch);
     }
 
     @Override
@@ -21,6 +28,7 @@ public class ScreenSettings extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        super.dispose();
+        blackOutOfSettings.dispose();
+        QuitButton.dispose();
     }
 }

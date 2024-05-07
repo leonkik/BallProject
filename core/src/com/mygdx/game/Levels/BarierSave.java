@@ -8,12 +8,13 @@ public class BarierSave extends BarrierObj {
     TimeManeger timeManeger;
     long appearanceTime;
 
-    public BarierSave(int x, int wight, int hight, boolean isOnUpDeck, long appearanceTime) {
-        super(x, wight, isOnUpDeck);
+    public BarierSave(int x, int wight, int height, boolean isOnUpDeck, long appearanceTime) {
+        super(wight, height, isOnUpDeck);
         this.appearanceTime = appearanceTime;
 
     }
-    public long getAppeareneTime(){
+
+    public long getAppeareneTime() {
         return appearanceTime;
     }
 }

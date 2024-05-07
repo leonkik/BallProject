@@ -4,18 +4,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.GameSettings;
 
-public class BarrierObj  {
-    BallObj ballObj;
+public class BarrierObj {
+
     boolean isOnUpDeck;
     int x;
     int y;
     int height;
     int width;
     Texture texture;
-    String pathToTexture ;
+    String pathToTexture;
     DeckObj deck_upper;
     DeckObj deck_botom;
-    public BarrierObj( int wight, int height, boolean isOnUpDeck) {
+
+    public BarrierObj(int wight, int height, boolean isOnUpDeck) {
         deck_upper = new DeckObj(125, GameSettings.SCREEN_HEIGHT / 2 + 335,
                 "pictures/Deck.png");
         deck_botom = new DeckObj(125, GameSettings.SCREEN_HEIGHT / 2 - 544,
@@ -25,13 +26,12 @@ public class BarrierObj  {
         this.width = wight;
 
 
-        ballObj = new BallObj(0, 0);
-        if(isOnUpDeck){
-            y = deck_upper.getY() ;
+
+        if (isOnUpDeck) {
+            y = deck_upper.getY() - height;
             this.pathToTexture = "pictures/TopBarrier.png";
-        }
-        if(!isOnUpDeck){
-            y = deck_botom.getY() + deck_botom.gethight() ;
+        } else {
+            y = deck_botom.getY() + deck_botom.gethight();
             this.pathToTexture = "pictures/BottomBarrier.png";
         }
         texture = new Texture(pathToTexture);
@@ -46,30 +46,29 @@ public class BarrierObj  {
             x -= GameSettings.BARRIER_SPEED;
         }
         if (x <= 0 - width) {
-            SetPosX(GameSettings.SCREEN_WIDTH);
             return true;
         }
         return false;
     }
 
-    public boolean isHit() {
-        return ballObj.getX() == x && ballObj.getYTop() <= y && isOnUpDeck
-                ||  ballObj.getX() == x && ballObj.getYTop() <= y && !isOnUpDeck  ;
-
+    public boolean isHit(BallObj ballObj) {
+      return  false;
 
     }
+
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, GameSettings.SCREEN_WIDTH, y, width, height);
+        batch.draw(texture, x, y, width, height);
     }
 
     public void dispose() {
         texture.dispose();
     }
 
-    public int getX(){
-        return x ;
+    public int getX() {
+        return x;
     }
-    public int getY(){
-        return y ;
+
+    public int getY() {
+        return y;
     }
 }

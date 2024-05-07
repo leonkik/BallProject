@@ -4,11 +4,14 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.coponenets.ImageView;
 
 public class ScreenShop extends ScreenAdapter {
     MyGdxGame myGdxGame;
+    ImageView blackOutOfSettings ;
     public ScreenShop(MyGdxGame myGdxGame) {
-        myGdxGame = new MyGdxGame();
+        this.myGdxGame =  myGdxGame;
+
     }
 
     @Override
@@ -17,7 +20,7 @@ public class ScreenShop extends ScreenAdapter {
         ScreenUtils.clear(102,102,102,1);
        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
        myGdxGame.batch.begin();
-       
+
        myGdxGame.batch.end();
     }
 

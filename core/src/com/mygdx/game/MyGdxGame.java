@@ -9,41 +9,42 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 
-
 import static com.mygdx.game.GameSettings.*;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 
 
 public class MyGdxGame extends Game {
 
-	public OrthographicCamera camera;
-	public SpriteBatch batch;
+    public OrthographicCamera camera;
+    public SpriteBatch batch;
 
-	public ScreenGame gameScreen;
-	public ScreenMenu menuScreen;
-	public ScreenSettings settingsScreen;
-	public ScreenShop shopScreen;
-	public ScreenLevelMenu levelMenuScreen;
-	public BitmapFont commonWhiteFont;
-	 public BitmapFont largeWhiteFont;
-	public void create() {
-		batch = new SpriteBatch();
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
-		largeWhiteFont = FontBuilder.generate(48, Color.WHITE, "font/MuseoModerno-ExtraLightItalic.ttf");
-		commonWhiteFont = FontBuilder.generate(24, Color.WHITE, "font/MuseoModerno-ExtraLightItalic.ttf");
+    public ScreenGame gameScreen;
+    public ScreenMenu menuScreen;
+    public ScreenSettings settingsScreen;
+    public ScreenShop shopScreen;
+    public ScreenLevelMenu levelMenuScreen;
+    public BitmapFont commonWhiteFont;
+    public BitmapFont largeWhiteFont;
 
-		 gameScreen = new ScreenGame(this);
-		 menuScreen = new ScreenMenu(this);
-		 shopScreen = new ScreenShop(this);
-		 levelMenuScreen = new ScreenLevelMenu(this);
-		 setScreen((Screen) gameScreen);
-
-	}
+    public void create() {
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        largeWhiteFont = FontBuilder.generate(48, Color.WHITE, "font/MuseoModerno-ExtraLightItalic.ttf");
+        commonWhiteFont = FontBuilder.generate(100, Color.WHITE, "font/MuseoModerno-Regular.ttf");
 
 
-	@Override
-	public void dispose () {
-		batch.dispose();
-	}
+        gameScreen = new ScreenGame(this);
+        menuScreen = new ScreenMenu(this);
+        shopScreen = new ScreenShop(this);
+        levelMenuScreen = new ScreenLevelMenu(this);
+        setScreen(gameScreen);
+
+    }
+
+
+    @Override
+    public void dispose() {
+        batch.dispose();
+    }
 }

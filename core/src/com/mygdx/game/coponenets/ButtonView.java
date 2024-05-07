@@ -15,7 +15,7 @@ public class ButtonView {
     BitmapFont bitmapFont;
 
     public ButtonView(int x, int y, int width, int height, String texturePath, BitmapFont bitmapFont, String text) {
-        bitmapFont = new BitmapFont();
+        this.bitmapFont = bitmapFont;
 
         imageView = new ImageView(x, y, width, height, texturePath);
         textView = new TextView(0, 0, bitmapFont);

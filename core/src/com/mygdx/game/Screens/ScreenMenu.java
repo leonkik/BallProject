@@ -25,7 +25,7 @@ public class ScreenMenu extends ScreenAdapter {
    FontBuilder fontBuilder;
 
     public ScreenMenu(MyGdxGame myGdxGame) {
-        myGdxGame  = new MyGdxGame();
+        this.myGdxGame = myGdxGame;
         vector3 = new Vector3();
         bitmapFont = new BitmapFont();
         fontBuilder = new FontBuilder();
@@ -49,17 +49,20 @@ public class ScreenMenu extends ScreenAdapter {
     }
 
    public void handlInput(){
-       Vector3 touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX() , Gdx.input.getY(),0 ));
-       if(playButton.isHit(touch.x,touch.y)){
-          myGdxGame.setScreen(screenShop);
-       }
-        if(quitButton.isHit(touch.x,touch.y)){
-            Gdx.app.exit();
-        }
-        if(settingsButton.isHit(touch.x,touch.y)){
-            myGdxGame.setScreen(screenSettings);
-        }
-    }
+
+      if(Gdx.input.justTouched()) {
+          Vector3 touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX() , Gdx.input.getY(),0 ));
+          if (playButton.isHit(touch.x, touch.y)) {
+              myGdxGame.setScreen(screenShop);
+          }
+          if (quitButton.isHit(touch.x, touch.y)) {
+              Gdx.app.exit();
+          }
+          if (settingsButton.isHit(touch.x, touch.y)) {
+              myGdxGame.setScreen(screenSettings);
+          }
+      }
+      }
 
     @Override
     public void dispose() {

@@ -21,9 +21,9 @@ import java.util.ArrayList;
 
 public class ScreenGame extends ScreenAdapter {
     int lastAppeareBarrierIdx;
-    int nowlevel;
+    public static int nowlevel;
 
-   ScreenLevelMenu screenLevelMenu;
+
     ArrayList<BarrierObj> barrierObjsArray;
     GameObj blackOutInterface;
     MyGdxGame myGdxGame;
@@ -43,7 +43,6 @@ public class ScreenGame extends ScreenAdapter {
     ButtonView resumeButton;
     ButtonView homeButton;
     ButtonView quitButton;
-    BarrierObj barrierObjs;
 
 
     public void show() {
@@ -61,47 +60,46 @@ public class ScreenGame extends ScreenAdapter {
                 "Deck.pngngle 94.png");
         deckUpper = new DeckObj(125, GameSettings.SCREEN_HEIGHT / 2 + 335,
                 "pictures/Deck.pngngle 94.png");
-        timeManeger = new TimeManeger();
         blackOutInterface = new GameObj(0,
                 GameSettings.SCREEN_HEIGHT - 100,
                 100,
                 GameSettings.SCREEN_WIDTH,
                 "pictures/BlackOut.png");
         vector3 = new Vector3();
-        barrierObjs = new BarrierObj(GameSettings.BARRIER_WIDTH, GameSettings.BARRIER_HEIGHT, true);
         timeManeger = new TimeManeger();
-        blackoutView = new ImageView(0, 0, GameSettings.BALL_WIDTH, GameSettings.BALL_HEIGHT, "pictures/BackGraundButtonSmall.png");
-        pauseTitleView = new TextView(GameSettings.SCREEN_WIDTH / 2 + 161 ,GameSettings.SCREEN_HEIGHT/2 + 40, myGdxGame.largeWhiteFont);
+        blackoutView = new ImageView(0, 0, 725, 1285, "pictures/BlackOut.png");
+        pauseTitleView = new TextView(GameSettings.SCREEN_WIDTH / 2 - 40, GameSettings.SCREEN_HEIGHT / 2 + 140, myGdxGame.largeWhiteFont);
         pauseButton = new ButtonView(GameSettings.SCREEN_WIDTH - 78,
                 GameSettings.SCREEN_HEIGHT - 68,
                 60,
                 60,
                 "pictures/Pause.png");
         barrierObjsArray = new ArrayList<>();
-        resumeButton = new ButtonView(GameSettings.SCREEN_WIDTH / 2 - 151,
-                GameSettings.SCREEN_HEIGHT/2 + 30,
+        resumeButton = new ButtonView(GameSettings.SCREEN_WIDTH / 2 - 115, 500,
+                302, 60, "pictures/BackGraundButtonSmall.png", myGdxGame.commonWhiteFont, "Resume"
+
+        );
+        homeButton = new ButtonView(GameSettings.SCREEN_WIDTH / 2 - 115,
+                400,
+                302, 60, "pictures/BackGraundButtonSmall.png",
                 myGdxGame.commonWhiteFont,
-                "Resume" );
-        homeButton = new ButtonView(GameSettings.SCREEN_WIDTH / 2 - 151,
-                GameSettings.SCREEN_HEIGHT/2 ,
-                151,30,"pictures/BackGraundButtonSmall.png",
-                myGdxGame.commonWhiteFont,
-                "Home" );
-        quitButton = new ButtonView(GameSettings.SCREEN_WIDTH / 2 - 151,GameSettings.SCREEN_HEIGHT/2 - 30,
-                151,
-                30,
+                "Home");
+        quitButton = new ButtonView(GameSettings.SCREEN_WIDTH / 2 - 115, 300,
+                302,
+                60,
                 "pictures/BackGraundButtonSmall.png",
                 myGdxGame.commonWhiteFont,
-                "Quit" );
-        ProgressBar = new ImageView(10,GameSettings.SCREEN_HEIGHT - 100,"pictures/ProgressBar.png");
-        nowProgressBar = new ImageView(10,GameSettings.SCREEN_HEIGHT - 100,getProgress(), 26,"pictures/nowProgress.png");
+                "Quit");
+        ProgressBar = new ImageView(10, GameSettings.SCREEN_HEIGHT - 56, "pictures/ProgressBar.png");
+        nowProgressBar = new ImageView(10, GameSettings.SCREEN_HEIGHT - 56, getProgress(), 26, "pictures/nowProgress.png");
     }
 
     @Override
     public void render(float delta) {
+        draw();
+        touch();
         if (timeManeger.getState() == ScreenGameState.PLAYING) {
-            draw();
-            touch();
+//            System.out.println(barrierObjsArray.size());
             collision();
             updateBarriers();
             ballobj.move(GameSettings.BALL_SPEED);
@@ -109,12 +107,13 @@ public class ScreenGame extends ScreenAdapter {
 
             if (isLevelPassed()) {
                 if (!Levels.levelSaves[nowlevel].nowLevelWasPassed) {
-                    MemoryManager.saveProgress(MemoryManager.loadProgress() + 1);
+                        //MemoryManager.saveProgress(MemoryManager.loadProgress() + 1);
                     Levels.levelSaves[nowlevel].toggleNowLevelPassed(true);
                 }
-                myGdxGame.setScreen(screenLevelMenu);
+                myGdxGame.setScreen(myGdxGame.levelMenuScreen);
+
             }
-            console();
+           // console();
         }
 
     }
@@ -125,23 +124,25 @@ public class ScreenGame extends ScreenAdapter {
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
         myGdxGame.batch.begin();
 
+        nowProgressBar.draw(myGdxGame.batch);
+        ProgressBar.draw(myGdxGame.batch);
         ballobj.draw(myGdxGame.batch);
         deckBottom.draw(myGdxGame.batch);
         deckUpper.draw(myGdxGame.batch);
         blackOutInterface.draw(myGdxGame.batch);
-        barrierObjs.draw(myGdxGame.batch);
         pauseButton.draw(myGdxGame.batch);
-        for (BarrierObj barrier : barrierObjsArray){
-            barrier.draw(myGdxGame.batch);
-            System.out.println("drawed");
-        }
 
+
+        for (BarrierObj barrier : barrierObjsArray) {
+            barrier.draw(myGdxGame.batch);
+            // System.out.println("drawed");
+        }
 
 
         if (timeManeger.getState() == ScreenGameState.PAUSED) {
             resumeButton.draw(myGdxGame.batch);
             quitButton.draw(myGdxGame.batch);
-            quitButton.draw(myGdxGame.batch);
+            homeButton.draw(myGdxGame.batch);
             blackoutView.draw(myGdxGame.batch);
             pauseTitleView.draw(myGdxGame.batch, "Pause");
 
@@ -173,28 +174,37 @@ public class ScreenGame extends ScreenAdapter {
 
 
             }
-            if (pauseButton.isHit(touch.x , touch.y)){
-               timeManeger.pauseSession();
+            if (pauseButton.isHit(touch.x, touch.y)) {
+                timeManeger.pauseSession();
 
             }
-
+            if (homeButton.isHit(touch.x, touch.y)) {
+                myGdxGame.setScreen(myGdxGame.menuScreen);
+            }
+            if (resumeButton.isHit(touch.x, touch.y)) {
+                timeManeger.resumeSession();
+            }
+            if (quitButton.isHit(touch.x, touch.y)) {
+                Gdx.app.exit();
+            }
         }
     }
 
     public void updateBarriers() {
-
+//        System.out.println(nowlevel);
         for (int i = lastAppeareBarrierIdx; i < Levels.levelSaves[nowlevel].barierSaves.length; i++) {
             if (timeManeger.timer() >= Levels.levelSaves[nowlevel].barierSaves[i].getAppeareneTime()) {
                 lastAppeareBarrierIdx += 1;
                 barrierObjsArray.add(Levels.levelSaves[nowlevel].barierSaves[i]);
             }
 
-            if( GameSettings.BARRIER_WIDTH * -1 <= Levels.levelSaves[nowlevel].barierSaves[i].getX() ) {
-              //  barrierObjsArray.remove(i);
+            if (GameSettings.BARRIER_WIDTH * -1 >= Levels.levelSaves[nowlevel].barierSaves[i].getX()) {
+                barrierObjsArray.remove(i);
+                i--;
             }
         }
 
-        }
+    }
 
     public void collision() {
         if (ballobj.getYTop() >= deckUpper.getY()) {
@@ -203,20 +213,23 @@ public class ScreenGame extends ScreenAdapter {
         if (ballobj.getY() <= deckBottom.getYTop()) {
             ballobj.toggleIsMoveup(true);
         }
-        if (barrierObjs.isHit()) {
-          //  System.out.println("isHit");
+        for(BarrierObj barrierObj : barrierObjsArray){
+            if(barrierObj.isHit(ballobj)){
+                System.out.println("l");
+            }
         }
 
     }
 
 
-    public  int getProgress(){
+    public int getProgress() {
         return 100 / Levels.levelSaves[nowlevel].barierSaves.length * lastAppeareBarrierIdx * 175 / 100;
     }
 
     public boolean isLevelPassed() {
-        if (lastAppeareBarrierIdx == Levels.levelSaves[nowlevel].barierSaves.length) {
-            MemoryManager.saveProgress(nowlevel + 1);
+
+        if (Levels.levelSaves[nowlevel].barierSaves[Levels.levelSaves[nowlevel].barierSaves.length - 1].getX()
+                + GameSettings.BARRIER_WIDTH <= 0) {
             return true;
         }
         return false;
@@ -225,9 +238,9 @@ public class ScreenGame extends ScreenAdapter {
 
     private void console() {
 
-       for(int i = 0; i < barrierObjsArray.size() ; i++)
-        System.out.println("number:"+i+"x:"+Levels.levelSaves[nowlevel].barierSaves[i].getX()+
-                "y" +Levels.levelSaves[nowlevel].barierSaves[i].getY());
+        for (int i = 0; i < barrierObjsArray.size(); i++)
+            System.out.println("number:" + i + "x:" + Levels.levelSaves[nowlevel].barierSaves[i].getX() +
+                    "y" + Levels.levelSaves[nowlevel].barierSaves[i].getY());
     }
 
 
