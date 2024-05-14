@@ -30,8 +30,8 @@ public class MyGdxGame extends Game {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
-        largeWhiteFont = FontBuilder.generate(48, Color.WHITE, "font/MuseoModerno-ExtraLightItalic.ttf");
-        commonWhiteFont = FontBuilder.generate(100, Color.WHITE, "font/MuseoModerno-Regular.ttf");
+        largeWhiteFont = FontBuilder.generate(68, Color.WHITE, "font/MuseoModerno-ExtraLightItalic.ttf");
+        commonWhiteFont = FontBuilder.generate(28, Color.WHITE, "font/MuseoModerno-Regular.ttf");
 
 
         gameScreen = new ScreenGame(this);

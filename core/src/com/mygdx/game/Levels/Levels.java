@@ -11,7 +11,7 @@ public class Levels {
                            new BarierSave(GameSettings.SCREEN_WIDTH,
                                    GameSettings.BARRIER_WIDTH,
                                    GameSettings.BARRIER_HEIGHT,
-                                   true,
+                                   false,
                                    1000),
                             new BarierSave(GameSettings.SCREEN_WIDTH,
                                     GameSettings.BARRIER_WIDTH,
@@ -22,7 +22,23 @@ public class Levels {
                                     GameSettings.BARRIER_WIDTH,
                                     GameSettings.BARRIER_HEIGHT,
                                     true,
-                                    3000)
+                                    3000),
+
+//                            new BarierSave(GameSettings.SCREEN_WIDTH,
+//                                    GameSettings.BARRIER_WIDTH,
+//                                    GameSettings.BARRIER_HEIGHT,
+//                                    false,
+//                                    1000),
+//                            new BarierSave(GameSettings.SCREEN_WIDTH,
+//                                    GameSettings.BARRIER_WIDTH,
+//                                    GameSettings.BARRIER_HEIGHT,
+//                                    false,
+//                                    2000),
+//                            new BarierSave(GameSettings.SCREEN_WIDTH,
+//                                    GameSettings.BARRIER_WIDTH,
+//                                    GameSettings.BARRIER_HEIGHT,
+//                                    false,
+//                                    3000)
 
                     }
             ),

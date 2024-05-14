@@ -51,7 +51,7 @@ public class BallObj extends GameObj {
         return y;
     }
     public int getYTop(){
-        return y + GameSettings.BALL_HEIGHT;
+        return y + height;
     }
     public int getXRight(){
         return x + GameSettings.BALL_WIDTH;

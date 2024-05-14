@@ -4,5 +4,5 @@ public enum ScreenGameState {
 
     PLAYING,
     PAUSED,
-    ENDED
+    BadGame
 }

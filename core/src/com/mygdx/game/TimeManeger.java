@@ -24,6 +24,9 @@ public class TimeManeger {
     public void resumeSession() {
         state = ScreenGameState.PLAYING;
     }
+    public void badGame(){
+        state = ScreenGameState.BadGame;
+    }
 
     public long timer(){
         return TimeUtils.millis() - lastTime ;

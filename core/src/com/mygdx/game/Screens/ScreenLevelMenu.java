@@ -58,10 +58,17 @@ public class ScreenLevelMenu extends ScreenAdapter {
                 System.out.println(ScreenGame.nowlevel);
             }
             if (downButton.isHit(touch.x, touch.y) && ScreenGame.nowlevel < 0) {
-                ScreenGame.nowlevel -= 1;
-            }
+               if(ScreenGame.nowlevel > 0) {
+                   ScreenGame.nowlevel -= 1;
+               }
+               }
             if (shopButton.isHit(touch.x, touch.y)) {
                 myGdxGame.setScreen(myGdxGame.shopScreen);
+            }
+            if(upButton.isHit(touch.x,touch.y)){
+               if(ScreenGame.nowlevel < 3) {
+                   ScreenGame.nowlevel += 1;
+               }
             }
         }
     }

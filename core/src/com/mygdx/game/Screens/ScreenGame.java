@@ -36,9 +36,11 @@ public class ScreenGame extends ScreenAdapter {
     ImageView blackoutView;
     ImageView ProgressBar;
     ImageView nowProgressBar;
+    ImageView Window;
     Vector3 vector3;
     TextView coinScore;
     TextView pauseTitleView;
+    ButtonView againButton;
     ButtonView pauseButton;
     ButtonView resumeButton;
     ButtonView homeButton;
@@ -68,7 +70,9 @@ public class ScreenGame extends ScreenAdapter {
         vector3 = new Vector3();
         timeManeger = new TimeManeger();
         blackoutView = new ImageView(0, 0, 725, 1285, "pictures/BlackOut.png");
+        Window = new ImageView(20,150,GameSettings.SCREEN_WIDTH - 40,GameSettings.SCREEN_HEIGHT - 300,"pictures/WindowGame.png");
         pauseTitleView = new TextView(GameSettings.SCREEN_WIDTH / 2 - 40, GameSettings.SCREEN_HEIGHT / 2 + 140, myGdxGame.largeWhiteFont);
+        againButton = new ButtonView(160,160,440,150,"pictures/BackGraundButtonSmall.png",myGdxGame.commonWhiteFont,"Try again");
         pauseButton = new ButtonView(GameSettings.SCREEN_WIDTH - 78,
                 GameSettings.SCREEN_HEIGHT - 68,
                 60,
@@ -76,22 +80,22 @@ public class ScreenGame extends ScreenAdapter {
                 "pictures/Pause.png");
         barrierObjsArray = new ArrayList<>();
         resumeButton = new ButtonView(GameSettings.SCREEN_WIDTH / 2 - 115, 500,
-                302, 60, "pictures/BackGraundButtonSmall.png", myGdxGame.commonWhiteFont, "Resume"
+                302, 80, "pictures/BackGraundButtonSmall.png", myGdxGame.commonWhiteFont, "Resume"
 
         );
         homeButton = new ButtonView(GameSettings.SCREEN_WIDTH / 2 - 115,
                 400,
-                302, 60, "pictures/BackGraundButtonSmall.png",
+                302, 80, "pictures/BackGraundButtonSmall.png",
                 myGdxGame.commonWhiteFont,
                 "Home");
         quitButton = new ButtonView(GameSettings.SCREEN_WIDTH / 2 - 115, 300,
                 302,
-                60,
+                80,
                 "pictures/BackGraundButtonSmall.png",
                 myGdxGame.commonWhiteFont,
                 "Quit");
-        ProgressBar = new ImageView(10, GameSettings.SCREEN_HEIGHT - 56, "pictures/ProgressBar.png");
-        nowProgressBar = new ImageView(10, GameSettings.SCREEN_HEIGHT - 56, getProgress(), 26, "pictures/nowProgress.png");
+        ProgressBar = new ImageView(10, GameSettings.SCREEN_HEIGHT - 56, "pictures/nowProgress.png");
+        nowProgressBar = new ImageView(10, GameSettings.SCREEN_HEIGHT - 56, getProgress(), 26, "pictures/ProgressBar.png");
     }
 
     @Override
@@ -147,6 +151,11 @@ public class ScreenGame extends ScreenAdapter {
             pauseTitleView.draw(myGdxGame.batch, "Pause");
 
         }
+        if(timeManeger.getState() == ScreenGameState.BadGame){
+            blackoutView.draw(myGdxGame.batch);
+            Window.draw(myGdxGame.batch);
+            againButton.draw(myGdxGame.batch);
+        }
         myGdxGame.batch.end();
     }
 
@@ -162,7 +171,7 @@ public class ScreenGame extends ScreenAdapter {
     public void touch() {
         if (Gdx.input.justTouched()) {
             Vector3 touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-
+        if(timeManeger.getState() == ScreenGameState.PLAYING) {
             if (ballobj.getisMoveup()) {
 
                 ballobj.toggleIsMoveup(false);
@@ -174,10 +183,13 @@ public class ScreenGame extends ScreenAdapter {
 
 
             }
+        }
             if (pauseButton.isHit(touch.x, touch.y)) {
                 timeManeger.pauseSession();
 
             }
+
+        if(timeManeger.getState() == ScreenGameState.PAUSED) {
             if (homeButton.isHit(touch.x, touch.y)) {
                 myGdxGame.setScreen(myGdxGame.menuScreen);
             }
@@ -187,6 +199,12 @@ public class ScreenGame extends ScreenAdapter {
             if (quitButton.isHit(touch.x, touch.y)) {
                 Gdx.app.exit();
             }
+        }
+           if(timeManeger.getState() == ScreenGameState.BadGame) {
+               if (againButton.isHit(touch.x, touch.y)) {
+                   restartGame();
+               }
+           }
         }
     }
 
@@ -205,7 +223,14 @@ public class ScreenGame extends ScreenAdapter {
         }
 
     }
-
+    public void restartGame(){
+        lastAppeareBarrierIdx = 0;
+        timeManeger.beginSession();
+        barrierObjsArray.clear();
+        for(int i = 0; i < Levels.levelSaves[nowlevel].barierSaves.length; i++){
+            Levels.levelSaves[nowlevel].barierSaves[i].SetPosX(GameSettings.SCREEN_WIDTH);
+        }
+    }
     public void collision() {
         if (ballobj.getYTop() >= deckUpper.getY()) {
             ballobj.toggleIsMoveup(false);
@@ -215,7 +240,7 @@ public class ScreenGame extends ScreenAdapter {
         }
         for(BarrierObj barrierObj : barrierObjsArray){
             if(barrierObj.isHit(ballobj)){
-                System.out.println("l");
+                timeManeger.badGame();
             }
         }
 
@@ -223,7 +248,7 @@ public class ScreenGame extends ScreenAdapter {
 
 
     public int getProgress() {
-        return 100 / Levels.levelSaves[nowlevel].barierSaves.length * lastAppeareBarrierIdx * 175 / 100;
+        return 100 % Levels.levelSaves[nowlevel].barierSaves.length * lastAppeareBarrierIdx ;
     }
 
     public boolean isLevelPassed() {

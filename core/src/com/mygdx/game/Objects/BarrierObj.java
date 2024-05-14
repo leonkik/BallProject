@@ -24,8 +24,7 @@ public class BarrierObj {
         this.x = GameSettings.SCREEN_WIDTH;
         this.height = height;
         this.width = wight;
-
-
+        this.isOnUpDeck = isOnUpDeck;
 
         if (isOnUpDeck) {
             y = deck_upper.getY() - height;
@@ -52,7 +51,17 @@ public class BarrierObj {
     }
 
     public boolean isHit(BallObj ballObj) {
-      return  false;
+
+        if (ballObj.getX() + ballObj.width >= x && ballObj.getX() <= x) {
+            if (ballObj.getY() <= y + height && !isOnUpDeck) {
+                System.out.println("down");
+                return true;
+            } else if (ballObj.getYTop() >= y && isOnUpDeck) {
+                System.out.println("upper");
+                return true;
+            }
+        }
+        return false;
 
     }
 
